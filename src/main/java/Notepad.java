@@ -93,21 +93,21 @@ public class Notepad implements ActionListener {
             openFile();
         }
         if(e.getSource() == saveas){
-            setSave();
+            setSaveas();
         }
     }
     public void newNotepad(){
         String texting = text.getText();
         if(!texting.equals("")){
             int i  = JOptionPane.showConfirmDialog(jf,"Do you want to save this file");
-            if(i==0){ setSave(); setTitle(title); text.setText("");} else if (i == 1) {
+            if(i==0){ setSaveas(); setTitle(title); text.setText("");} else if (i == 1) {
                 text.setText("");}
             else {text.setText(texting);}
             System.out.println(i);
         }
         text.setText("");
     }
-    public void setSave()  {
+    public void setSaveas()  {
         JFileChooser fileChooser = new JFileChooser();
         int i = fileChooser.showSaveDialog(jf);
         if(i!=0) JOptionPane.showMessageDialog(fileChooser,"File not Saved!" , "👋📁" , JOptionPane.WARNING_MESSAGE);
@@ -128,11 +128,10 @@ public class Notepad implements ActionListener {
         jf.setTitle(title);
     }
     public void openFile(){
-
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(jf);
-        System.out.println(result);
+        text.setText("");
         if(result!=0) JOptionPane.showMessageDialog(fileChooser,"File not Selected!" , "👋📁" , JOptionPane.WARNING_MESSAGE);
         else {
             try{
@@ -141,12 +140,28 @@ public class Notepad implements ActionListener {
                 int i;
                 while ((i=fos.read())!= -1){
                     // TODO: read file to textarea
-                    //text.append((char)i);
+                    text.append(String.valueOf((char)i));
+                    setTitle(filee.getName());
                 }
             }catch (Exception e){
                 e.printStackTrace();
             }
 
+        }
+    }
+    public void setSave(){
+        if(jf.getTitle().equals(title)){
+            setSaveas();
+        }else{
+            try{
+                String updatedText = text.getText();
+                byte [] b = updatedText.getBytes();
+                FileOutputStream fos = new FileOutputStream(filee);
+                fos.write(b);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 }
