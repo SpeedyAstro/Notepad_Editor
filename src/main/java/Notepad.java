@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -88,8 +89,22 @@ public class Notepad implements ActionListener {
         if(e.getSource() == save){
             setSave();
         }
+        if(e.getSource() == open){
+            openFile();
+        }
+        if(e.getSource() == saveas){
+            setSave();
+        }
     }
     public void newNotepad(){
+        String texting = text.getText();
+        if(!texting.equals("")){
+            int i  = JOptionPane.showConfirmDialog(jf,"Do you want to save this file");
+            if(i==0){ setSave(); setTitle(title); text.setText("");} else if (i == 1) {
+                text.setText("");}
+            else {text.setText(texting);}
+            System.out.println(i);
+        }
         text.setText("");
     }
     public void setSave()  {
@@ -111,6 +126,28 @@ public class Notepad implements ActionListener {
     }
     public void setTitle(String title){
         jf.setTitle(title);
+    }
+    public void openFile(){
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(jf);
+        System.out.println(result);
+        if(result!=0) JOptionPane.showMessageDialog(fileChooser,"File not Selected!" , "👋📁" , JOptionPane.WARNING_MESSAGE);
+        else {
+            try{
+                filee = fileChooser.getSelectedFile();
+                FileInputStream fos = new FileInputStream(filee);
+                int i;
+                while ((i=fos.read())!= -1){
+                    // TODO: read file to textarea
+                    //text.append((char)i);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
     }
 }
 
