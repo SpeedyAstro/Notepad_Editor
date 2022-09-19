@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PageFormat;
@@ -7,18 +8,24 @@ import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Notepad implements ActionListener {
 
     UIManager.LookAndFeelInfo[] looks;
     String title = "Untitled - Notepad";
     JFrame jf;
-    JMenuBar menubar;
-    JMenu file , edit;
+    JMenuBar menu_bar;
+    JMenu file , edit , format , help;
     JMenuItem new_tv, open , save , save_as, exit , page_setup , prints;
     JMenuItem cut , copy , paste , replace , date_time;
+    JMenuItem font_menu , font_color , workspace_color;
     JTextArea text;
     File filee;
+    JButton jbtn;
+    JFrame replaceframe;
+    JTextField jtf , jtf2;
     Notepad(){
         try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -29,7 +36,7 @@ public class Notepad implements ActionListener {
         jf.setSize(500,500);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        menubar = new JMenuBar();
+        menu_bar = new JMenuBar();
         file = new JMenu("File");
 
         new_tv = new JMenuItem("New");
@@ -88,9 +95,29 @@ public class Notepad implements ActionListener {
         date_time.addActionListener(this);
         edit.add(date_time);
         // Menu items ...
-        menubar.add(file);
-        menubar.add(edit);
-        jf.setJMenuBar(menubar);
+        menu_bar.add(file);
+        menu_bar.add(edit);
+        jf.setJMenuBar(menu_bar);
+
+        format = new JMenu("Format");
+        menu_bar.add(format);
+
+        font_menu = new JMenuItem("Font");
+        font_menu.addActionListener(this);
+        format.add(font_menu);
+        format.addSeparator();
+        font_color = new JMenuItem("Font Color");
+        font_color.addActionListener(this);
+        format.add(font_color);
+
+        workspace_color = new JMenuItem("WorkSpace Editor");
+        workspace_color.addActionListener(this);
+        format.add(workspace_color);
+
+        help = new JMenu("Help");
+        help.addActionListener(this);
+        menu_bar.add(help);
+
 
         text = new JTextArea();
         // adding scroll pane
@@ -137,6 +164,18 @@ public class Notepad implements ActionListener {
         }
         if(e.getSource() == replace){
             replaceText();
+        }
+        if(e.getSource() == jbtn){
+            replace();
+        }
+        if (e.getSource() == date_time){
+            setDateTime();
+        }
+        if(e.getSource() == font_color){
+            setFontColor();
+        }
+        if(e.getSource() == workspace_color){
+            WorkSpaceColor();
         }
     }
     public void newNotepad(){
@@ -223,29 +262,51 @@ public class Notepad implements ActionListener {
         }
     }
     public void  replaceText(){
-        JFrame replacefram = new JFrame("Replace");
-        replacefram.setSize(500,300);
-        replacefram.setLayout(null);
+        replaceframe = new JFrame("Replace");
+        replaceframe.setSize(500,300);
+        replaceframe.setLayout(null);
         JLabel j11 = new JLabel("Find What ");
         j11.setBounds(50,50,80,40);
-        replacefram.add(j11);
+        replaceframe.add(j11);
 
-        JTextField jtf = new JTextField();
+        jtf = new JTextField();
         jtf.setBounds(150 , 50 , 200 , 40);
-        replacefram.add(jtf);
+        replaceframe.add(jtf);
 
         JLabel j12 = new JLabel("Replace with : ");
         j12.setBounds(50,100,100,40);
-        replacefram.add(j12);
+        replaceframe.add(j12);
 
-        JTextField jtf2 = new JTextField();
+        jtf2 = new JTextField();
         jtf2.setBounds(150 , 100 , 200 , 40);
-        replacefram.add(jtf2);
+        replaceframe.add(jtf2);
 
-        JButton jbtn = new JButton("Replace");
+        jbtn = new JButton("Replace");
+        jbtn.addActionListener(this);
         jbtn.setBounds(200 , 150 , 100 , 40 );
-        replacefram.add(jbtn);
-        replacefram.setVisible(true);
+        replaceframe.add(jbtn);
+        replaceframe.setVisible(true);
+    }
+    public void replace(){
+        String find_what = jtf.getText();
+        String replace_with = jtf2.getText();
+        String update = text.getText();
+        String new_text = update.replace(find_what,replace_with);
+        text.setText(new_text);
+        replaceframe.setVisible(false);
+    }
+    public void setDateTime(){
+        LocalDateTime ldt = LocalDateTime.now();
+        String s = ldt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        text.append(s);
+    }
+    public void setFontColor(){
+        Color c = JColorChooser.showDialog(jf , "Select Font Color" , Color.BLACK);
+        text.setForeground(c);
+    }
+    public void WorkSpaceColor(){
+        Color c = JColorChooser.showDialog(jf , "Select WorkSpace Color" , Color.white);
+        text.setBackground(c);
     }
 }
 
