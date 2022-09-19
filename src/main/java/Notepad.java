@@ -5,6 +5,9 @@ import com.formdev.flatlaf.IntelliJTheme;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -95,6 +98,12 @@ public class Notepad implements ActionListener {
         if(e.getSource() == saveas){
             setSaveas();
         }
+        if(e.getSource() == page_setup){
+            pageSetup();
+        }
+        if(e.getSource() == prints){
+            printPage();
+        }
     }
     public void newNotepad(){
         String texting = text.getText();
@@ -161,6 +170,21 @@ public class Notepad implements ActionListener {
             }
             catch (Exception e){
                 e.printStackTrace();
+            }
+        }
+    }
+    public void pageSetup(){
+        PrinterJob pj = PrinterJob.getPrinterJob();
+        PageFormat pf = pj.pageDialog(pj.defaultPage());
+    }
+    public void printPage(){
+        PrinterJob pj = PrinterJob.getPrinterJob();
+        if (pj.printDialog()) {
+            try {
+                pj.print();
+            }
+            catch (PrinterException exc) {
+                System.out.println(exc);
             }
         }
     }
