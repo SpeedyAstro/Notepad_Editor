@@ -1,7 +1,3 @@
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.IntelliJTheme;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +6,6 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 public class Notepad implements ActionListener {
@@ -19,8 +14,9 @@ public class Notepad implements ActionListener {
     String title = "Untitled - Notepad";
     JFrame jf;
     JMenuBar menubar;
-    JMenu file;
-    JMenuItem neww, open , save , saveas , exit , page_setup , prints;
+    JMenu file , edit;
+    JMenuItem new_tv, open , save , save_as, exit , page_setup , prints;
+    JMenuItem cut , copy , paste , replace , date_time;
     JTextArea text;
     File filee;
     Notepad(){
@@ -36,9 +32,9 @@ public class Notepad implements ActionListener {
         menubar = new JMenuBar();
         file = new JMenu("File");
 
-        neww = new JMenuItem("New");
-        neww.addActionListener(this);
-        file.add(neww);
+        new_tv = new JMenuItem("New");
+        new_tv.addActionListener(this);
+        file.add(new_tv);
 
         open = new JMenuItem("Open");
         open.addActionListener(this);
@@ -48,9 +44,9 @@ public class Notepad implements ActionListener {
         save.addActionListener(this);
         file.add(save);
 
-        saveas = new JMenuItem("Save as");
-        saveas.addActionListener(this);
-        file.add(saveas);
+        save_as = new JMenuItem("Save as");
+        save_as.addActionListener(this);
+        file.add(save_as);
         // Added separator
         file.addSeparator();
 
@@ -67,7 +63,33 @@ public class Notepad implements ActionListener {
         exit.addActionListener(this);
         file.add(exit);
 
+        // Edit menu
+        edit = new JMenu("Edit");
+        // Edit menu items
+        cut = new JMenuItem("Cut");
+        cut.addActionListener(this);
+        edit.add(cut);
+
+        copy = new JMenuItem("Copy");
+        copy.addActionListener(this);
+        edit.add(copy);
+
+        paste = new JMenuItem("Paste");
+        paste.addActionListener(this);
+        edit.add(paste);
+
+        edit.addSeparator();
+
+        replace = new JMenuItem("Replace");
+        replace.addActionListener(this);
+        edit.add(replace);
+        edit.addSeparator();
+        date_time = new JMenuItem("Date & Time");
+        date_time.addActionListener(this);
+        edit.add(date_time);
+        // Menu items ...
         menubar.add(file);
+        menubar.add(edit);
         jf.setJMenuBar(menubar);
 
         text = new JTextArea();
@@ -83,7 +105,7 @@ public class Notepad implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == neww){
+        if(e.getSource() == new_tv){
             newNotepad();
         }
         if(e.getSource() == exit){
@@ -95,7 +117,7 @@ public class Notepad implements ActionListener {
         if(e.getSource() == open){
             openFile();
         }
-        if(e.getSource() == saveas){
+        if(e.getSource() == save_as){
             setSaveas();
         }
         if(e.getSource() == page_setup){
@@ -103,6 +125,18 @@ public class Notepad implements ActionListener {
         }
         if(e.getSource() == prints){
             printPage();
+        }
+        if (e.getSource() == cut){
+            text.cut();
+        }
+        if(e.getSource() == copy){
+            text.copy();
+        }
+        if(e.getSource() == paste){
+            text.paste();
+        }
+        if(e.getSource() == replace){
+            replaceText();
         }
     }
     public void newNotepad(){
@@ -187,6 +221,31 @@ public class Notepad implements ActionListener {
                 System.out.println(exc);
             }
         }
+    }
+    public void  replaceText(){
+        JFrame replacefram = new JFrame("Replace");
+        replacefram.setSize(500,300);
+        replacefram.setLayout(null);
+        JLabel j11 = new JLabel("Find What ");
+        j11.setBounds(50,50,80,40);
+        replacefram.add(j11);
+
+        JTextField jtf = new JTextField();
+        jtf.setBounds(150 , 50 , 200 , 40);
+        replacefram.add(jtf);
+
+        JLabel j12 = new JLabel("Replace with : ");
+        j12.setBounds(50,100,100,40);
+        replacefram.add(j12);
+
+        JTextField jtf2 = new JTextField();
+        jtf2.setBounds(150 , 100 , 200 , 40);
+        replacefram.add(jtf2);
+
+        JButton jbtn = new JButton("Replace");
+        jbtn.setBounds(200 , 150 , 100 , 40 );
+        replacefram.add(jbtn);
+        replacefram.setVisible(true);
     }
 }
 
