@@ -1,3 +1,5 @@
+import com.sun.tools.jconsole.JConsoleContext;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +17,7 @@ public class Notepad implements ActionListener {
 
     UIManager.LookAndFeelInfo[] looks;
     String title = "Untitled - Notepad";
-    JFrame jf;
+    JFrame jf , font_frame;
     JMenuBar menu_bar;
     JMenu file , edit , format , help;
     JMenuItem new_tv, open , save , save_as, exit , page_setup , prints;
@@ -23,9 +25,10 @@ public class Notepad implements ActionListener {
     JMenuItem font_menu , font_color , workspace_color;
     JTextArea text;
     File filee;
-    JButton jbtn;
+    JButton jbtn , selected;
     JFrame replaceframe;
     JTextField jtf , jtf2;
+    JComboBox font_family,font_style,font_size;
     Notepad(){
         try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -177,6 +180,12 @@ public class Notepad implements ActionListener {
         if(e.getSource() == workspace_color){
             WorkSpaceColor();
         }
+        if(e.getSource() == font_menu){
+            openFontFrame();
+        }
+        if(e.getSource() == selected){
+            setFont();
+        }
     }
     public void newNotepad(){
         String texting = text.getText();
@@ -307,6 +316,42 @@ public class Notepad implements ActionListener {
     public void WorkSpaceColor(){
         Color c = JColorChooser.showDialog(jf , "Select WorkSpace Color" , Color.white);
         text.setBackground(c);
+    }
+    public void openFontFrame(){
+        font_frame = new JFrame("Fonts");
+        font_frame.setSize(700,300);
+        font_frame.setLayout(null);
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        String []fontFamilies = ge.getAvailableFontFamilyNames();
+        font_family = new JComboBox(fontFamilies);
+        font_family.setBounds(50,50,200,40);
+        font_frame.add(font_family);
+        String [] font_style_list = {"Plain","Bold","Italic"};
+        font_style = new JComboBox(font_style_list);
+        font_style.setBounds(300,50,100,40);
+        font_frame.add(font_style);
+        Integer [] font_size_list = {10,15,20,21,23,26,30,35,40,45,50,55,60};
+        font_size = new JComboBox(font_size_list);
+        font_size.setBounds(450,50,80,40);
+        font_frame.add(font_size);
+        selected = new JButton("Select");
+        selected.setBounds(200,150,80,50);
+        selected.addActionListener(this);
+        font_frame.add(selected);
+        font_frame.setVisible(true);
+    }
+    public void setFont(){
+        String selected_font_family =(String) font_family.getSelectedItem();
+        Integer selected_font_size = (Integer) font_size.getSelectedItem();
+        String selected_font_style = (String) font_style.getSelectedItem();
+        int font_setter = 0;
+        if(selected_font_style.equals("Plain")) font_setter=Font.PLAIN;
+        else if(selected_font_style.equals("Bold")) font_setter=Font.BOLD;
+        else if(selected_font_style.equals("Italic")) font_setter=Font.ITALIC;
+        Font font = new Font(selected_font_family,font_setter,selected_font_size);
+        text.setFont(font);
+        font_frame.setVisible(false);
     }
 }
 
