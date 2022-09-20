@@ -38,7 +38,8 @@ public class Notepad implements ActionListener {
         jf = new JFrame(title);
         jf.setSize(500,500);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        Image icon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\pande\\Documents\\NotepadEditor\\src\\main\\java\\skull1.png");
+        jf.setIconImage(icon);
         menu_bar = new JMenuBar();
         file = new JMenu("File");
 
