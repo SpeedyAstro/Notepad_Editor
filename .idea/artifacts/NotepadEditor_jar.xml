@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="NotepadEditor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/NotepadEditor_jar</output-path>
+    <root id="archive" name="NotepadEditor.jar">
+      <element id="module-output" name="NotepadEditor" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/flatlaf-2.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

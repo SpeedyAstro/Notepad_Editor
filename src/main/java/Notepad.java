@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -12,6 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 
 public class Notepad implements ActionListener {
 
@@ -23,6 +26,7 @@ public class Notepad implements ActionListener {
     JMenuItem new_tv, open , save , save_as, exit , page_setup , prints;
     JMenuItem cut , copy , paste , replace , date_time;
     JMenuItem font_menu , font_color , workspace_color;
+    JCheckBoxMenuItem word_wrap;
     JTextArea text;
     File filee;
     JButton jbtn , selected;
@@ -44,18 +48,22 @@ public class Notepad implements ActionListener {
         file = new JMenu("File");
 
         new_tv = new JMenuItem("New");
+        new_tv.setAccelerator(KeyStroke.getKeyStroke('N', CTRL_DOWN_MASK));
         new_tv.addActionListener(this);
         file.add(new_tv);
 
         open = new JMenuItem("Open");
+        open.setAccelerator(KeyStroke.getKeyStroke('O' , CTRL_DOWN_MASK));
         open.addActionListener(this);
         file.add(open);
 
         save = new JMenuItem("Save");
+        save.setAccelerator(KeyStroke.getKeyStroke('S', CTRL_DOWN_MASK));
         save.addActionListener(this);
         file.add(save);
 
         save_as = new JMenuItem("Save as");
+        save_as.setAccelerator(KeyStroke.getKeyStroke('N', InputEvent.SHIFT_DOWN_MASK));
         save_as.addActionListener(this);
         file.add(save_as);
         // Added separator
@@ -65,12 +73,14 @@ public class Notepad implements ActionListener {
         page_setup.addActionListener(this);
         file.add(page_setup);
         prints = new JMenuItem("Print");
+        prints.setAccelerator(KeyStroke.getKeyStroke('P', CTRL_DOWN_MASK));
         prints.addActionListener(this);
         file.add(prints);
 
         file.addSeparator();
 
         exit = new JMenuItem("Exit");
+        exit.setAccelerator(KeyStroke.getKeyStroke('E', CTRL_DOWN_MASK));
         exit.addActionListener(this);
         file.add(exit);
 
@@ -105,7 +115,10 @@ public class Notepad implements ActionListener {
 
         format = new JMenu("Format");
         menu_bar.add(format);
-
+        word_wrap = new JCheckBoxMenuItem("Word Wrap") ;
+        word_wrap.addActionListener(this);
+        format.add(word_wrap);
+        format.addSeparator();
         font_menu = new JMenuItem("Font");
         font_menu.addActionListener(this);
         format.add(font_menu);
@@ -175,6 +188,10 @@ public class Notepad implements ActionListener {
         if (e.getSource() == date_time){
             setDateTime();
         }
+        if(e.getSource() == word_wrap){
+            boolean b =word_wrap.getState();
+            text.setLineWrap(b);
+        }
         if(e.getSource() == font_color){
             setFontColor();
         }
@@ -186,6 +203,9 @@ public class Notepad implements ActionListener {
         }
         if(e.getSource() == selected){
             setFont();
+        }
+        if (e.getSource() == help){
+
         }
     }
     public void newNotepad(){
