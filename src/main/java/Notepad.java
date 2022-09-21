@@ -145,8 +145,7 @@ public class Notepad implements ActionListener {
         JScrollPane scrollpane = new JScrollPane(text);
         scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jf.add(scrollpane);
-
-
+        
         jf.setVisible(true);
         //
     }
