@@ -25,7 +25,7 @@ public class Notepad implements ActionListener {
     JMenu file , edit , format , help;
     JMenuItem new_tv, open , save , save_as, exit , page_setup , prints;
     JMenuItem cut , copy , paste , replace , date_time;
-    JMenuItem font_menu , font_color , workspace_color;
+    JMenuItem font_menu , font_color , workspace_color, info;
     JCheckBoxMenuItem word_wrap;
     JTextArea text;
     File filee;
@@ -134,6 +134,12 @@ public class Notepad implements ActionListener {
         help = new JMenu("Help");
         help.addActionListener(this);
         menu_bar.add(help);
+        info = new JMenuItem("Info");
+        info.addActionListener(this);
+        help.add(info);
+
+
+
 
 
         text = new JTextArea();
@@ -204,8 +210,9 @@ public class Notepad implements ActionListener {
         if(e.getSource() == selected){
             setFont();
         }
-        if (e.getSource() == help){
-
+        if (e.getSource() == info){
+            System.out.println("hep");
+            setHelp();
         }
     }
     public void newNotepad(){
@@ -373,6 +380,19 @@ public class Notepad implements ActionListener {
         Font font = new Font(selected_font_family,font_setter,selected_font_size);
         text.setFont(font);
         font_frame.setVisible(false);
+    }
+    public void setHelp(){
+        JFrame help_menu = new JFrame("Help");
+        help_menu.setSize(500,400);
+        help_menu.setLayout(null);
+        JLabel label1 = new JLabel(new ImageIcon("about.gif"));
+        //adding label1 to the JPanel
+        help_menu.add(label1);
+        JLabel jlt = new JLabel("Credits: \n Anubhav Pandey  ");
+        jlt.setBounds(50,100,300,100);
+        help_menu.add(jlt);
+        help_menu.setVisible(true);
+
     }
 }
 
