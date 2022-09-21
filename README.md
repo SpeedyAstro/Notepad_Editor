@@ -1,4 +1,4 @@
-# **Notepad Editor**
+# **Notepad Editor**         <img src="https://github.com/Mr-Anubhav-pandey/Notepad_Editor/blob/main/raw-data/page.png" width="70">
 **A Standalone Application made in java with the help of AWT/SPRING with event handling.**
 <h1 align="center">
   <br>
