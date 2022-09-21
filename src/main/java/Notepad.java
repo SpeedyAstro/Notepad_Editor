@@ -1,5 +1,3 @@
-import com.sun.tools.jconsole.JConsoleContext;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 
 public class Notepad implements ActionListener {
-
+    // Implementation
     UIManager.LookAndFeelInfo[] looks;
     String title = "Untitled - Notepad";
     JFrame jf , font_frame;
@@ -28,7 +26,7 @@ public class Notepad implements ActionListener {
     JMenuItem font_menu , font_color , workspace_color, info;
     JCheckBoxMenuItem word_wrap;
     JTextArea text;
-    File filee;
+    File file_e;
     JButton jbtn , selected;
     JFrame replaceframe;
     JTextField jtf , jtf2;
@@ -234,11 +232,11 @@ public class Notepad implements ActionListener {
             try {
                 String data = text.getText();
                 byte[] b = data.getBytes();
-                filee = fileChooser.getSelectedFile();
-                FileOutputStream fos = new FileOutputStream(filee);
+                file_e = fileChooser.getSelectedFile();
+                FileOutputStream fos = new FileOutputStream(file_e);
                 fos.write(b);
                 fos.close();
-                setTitle(filee.getName());
+                setTitle(file_e.getName());
             }
             catch (Exception e) { e.printStackTrace();}
         }
@@ -254,13 +252,13 @@ public class Notepad implements ActionListener {
         if(result!=0) JOptionPane.showMessageDialog(fileChooser,"File not Selected!" , "👋📁" , JOptionPane.WARNING_MESSAGE);
         else {
             try{
-                filee = fileChooser.getSelectedFile();
-                FileInputStream fos = new FileInputStream(filee);
+                file_e = fileChooser.getSelectedFile();
+                FileInputStream fos = new FileInputStream(file_e);
                 int i;
                 while ((i=fos.read())!= -1){
                     // TODO: read file to textarea
                     text.append(String.valueOf((char)i));
-                    setTitle(filee.getName());
+                    setTitle(file_e.getName());
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -275,7 +273,7 @@ public class Notepad implements ActionListener {
             try{
                 String updatedText = text.getText();
                 byte [] b = updatedText.getBytes();
-                FileOutputStream fos = new FileOutputStream(filee);
+                FileOutputStream fos = new FileOutputStream(file_e);
                 fos.write(b);
             }
             catch (Exception e){
