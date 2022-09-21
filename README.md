@@ -10,6 +10,13 @@
 
 <h4 align="center">A minimal Editor desktop app built on top of <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html" target="_blank">Java Swing</a>.</h4>
 
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#download">Download</a> •
+  <a href="#Frameworks">Frameworks</a> •
+  <a href="#Optimization">Optimization </a>
+</p>
 
 <p align="center">
   <img src="https://github.com/Mr-Anubhav-pandey/Notepad_Editor/blob/main/raw-data/notepad.gif" alt="animated" />
