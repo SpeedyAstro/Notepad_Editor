@@ -52,8 +52,8 @@ You can [download](https://github.com/Mr-Anubhav-pandey/Notepad_Editor/releases/
 
 ### Frameworks
 - Java Swing/AWT
-- ByteStream
+- IOStreams/ByteStream
  
- ### Optimization 
+ ### Future Optimization 
 - [ ] UI Smoothin
 - [ ] Dark mode
